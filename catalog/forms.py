@@ -31,4 +31,10 @@ class ProductForm(forms.ModelForm):
         if price < 0:
             raise forms.ValidationError("Цена не может быть отрицательной.")
         return price
+
+    # Стилизация формы
+    def __init__(self, *args, **kwargs):
+        super(ProductForm, self).__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs['class'] = 'form-control'  # Добавление класса для стилизации
     

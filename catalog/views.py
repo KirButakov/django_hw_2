@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Product
 from .forms import ProductForm
 
@@ -17,7 +17,7 @@ def product_create(request):
     return render(request, 'catalog/product_create.html', {'form': form})
 
 def product_update(request, pk):
-    product = Product.objects.get(pk=pk)
+    product = get_object_or_404(Product, pk=pk)  # Используем get_object_or_404 для безопасного получения объекта
     if request.method == 'POST':
         form = ProductForm(request.POST, instance=product)
         if form.is_valid():
@@ -28,7 +28,7 @@ def product_update(request, pk):
     return render(request, 'catalog/product_update.html', {'form': form})
 
 def product_delete(request, pk):
-    product = Product.objects.get(pk=pk)
+    product = get_object_or_404(Product, pk=pk)  # Используем get_object_or_404 для безопасного получения объекта
     if request.method == 'POST':
         product.delete()
         return redirect('product_list')
